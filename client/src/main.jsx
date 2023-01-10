@@ -1,16 +1,17 @@
-import React from "react";
-import { ReactDOM } from "react-dom/client";
-import { BrowserRouter as Router } from "react-router-dom";
-import { ChainId, ThirdWebProvider } from "@thirdweb-dev/react";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react';
 
-import App from "./App";
+import App from './App';
+import './index.css';
 
-const root = ReactDOM.createRoot(document.getElembentById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <ThirdWebProvider desiredChainId={ChainId.Goerli}>
+  <ThirdwebProvider desiredChainId={ChainId.Goerli}>
     <Router>
-      <App />
+        <App />
     </Router>
-  </ThirdWebProvider>
-);
+  </ThirdwebProvider>
+)
