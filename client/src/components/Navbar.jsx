@@ -13,7 +13,7 @@ const Navbar = () => {
   const [toggleDrawer, setToggleDrawer] = useState(false);
 
   return (
-    <div className='flex md:flex-row sm:flex-row flex-col-reverse justify-between  bg-[35px] gap-6'>
+    <div className='flex md:flex-row sm:flex-row flex-col-reverse justify-between  mb-[36px] bg-[35px] gap-6'>
       <div className='lg:flex-1 md:flex-1 flex flex-row max-w-[600px] ml-2 py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px]'>
         <input type='text' placeholder="Search for campaigns" className="w-full flex font-epilogue font-normal text-[14px]
         placeholder:text=[#4b5264] text-white bg-transparent outline-none" />
