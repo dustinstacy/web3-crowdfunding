@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 
 import { useStateContext } from '../context';
-import { CustomButton, CountBox } from '../components';
+import { CustomButton, CountBox, Loader } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
-import { thirdweb, loader } from '../assets';
+import { thirdweb } from '../assets';
 
 const CampaignDetails = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
-  const { getDonations, contract, address } = useStateContext();
+  const { getDonations, contract, address, donate } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
@@ -17,8 +18,24 @@ const CampaignDetails = () => {
 
   const remainingDays = daysLeft(state.deadline);
 
-  const handleDonate = async () => {
+  const fetchDonators = async () => {
+    const data = await getDonations(state.pId);
 
+    setDonators(data);
+    console.log(donators);
+  }
+
+  useEffect(() => {
+    if (contract) fetchDonators();
+  }, [contract, address])
+
+  const handleDonate = async () => {
+    setIsLoading(true);
+
+    await donate(state.pId, amount);
+    navigate('/');
+
+    setIsLoading(false);
   }
 
   return (
@@ -70,8 +87,9 @@ const CampaignDetails = () => {
 
               <div className="mt-[20px] flex flex-col gap-4">
                 {donators.length > 0 ? donators.map((item, index) => (
-                <div>
-                  DONATOR
+                <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
+                    <p className='font-epilogue font-normal text-[#b2b3bd] leading-[26px] break-11'>{index + 1}. {item.donator}</p>
+                    <p className='font-epilogue font-normal text-[#808191] leading-[26px] break-11 mr-[26px]'>{item.donation}</p>
                 </div>
                 )) : (
                   <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
